@@ -106,9 +106,8 @@ function CarveLVM {
    systemctl stop boot.mount || true
 
    # Create /boot filesystem
-   mkfs -t "${FSTYPE}" "${MKFSFORCEOPT}" -L "${BOOTLABEL}" \
-     "${CHROOTDEV}${PARTPRE}1" || \
-       err_exit "Failure creating filesystem - /boot"
+   mkfs -t "${FSTYPE}" "${MKFSFORCEOPT}" -L "${BOOTLABEL}" "${CHROOTDEV}${PARTPRE}1" || \
+      ( tail -n 100 /var/log/messages; err_exit "Failure creating filesystem - /boot" )
 
    ## Create LVM objects
 
